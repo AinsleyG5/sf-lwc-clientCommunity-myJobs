@@ -1,0 +1,82 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <template if:true={objectdata}>
+        <lightning-accordion-section name={objectdata.Candidate_Name__c} label={objectdata.Candidate_Name__c}>
+            <p><b>Stage:</b> {objectdata.TR1__Stage__c}</p>
+                <p><b>Score:</b> 6.2 
+                    <lightning-helptext
+                        content="Job Function: +2, Location: +2.2, Availability: +1, Skills: +1">
+                    </lightning-helptext>
+                </p>
+            <p><b>Email:</b> {objectdata.TR1__Email__c}</p>
+            <br>
+            <lightning-button
+                class="slds-var-m-top_small"
+                label="Details"
+                variant="brand"
+                onclick={openModal}>
+            </lightning-button>
+        </lightning-accordion-section>
+
+        <template if:true={isModalOpen}>
+            <!-- Modal/Popup Box LWC starts here -->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close"
+                                alternative-text="close"
+                                variant="inverse"
+                                size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> { objectdata.Candidate_Name__c } </h2>
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <img src="https://i.imgur.com/lL45vaX.png" alt="Blank Candidate Image">
+                                <p class="slds-p-horizontal_small"><b>Stage:</b> {objectdata.TR1__Stage__c} </p>
+                                <p class="slds-p-horizontal_small"><b>Email:</b> {objectdata.TR1__Email__c}</p>
+                                <p class="slds-p-horizontal_small"><b>Current Title:</b> {objectdata.TR1__Applicant__r.Title}</p>
+                                <p class="slds-p-horizontal_small"><b>Current Employer:</b> {objectdata.TR1__Applicant__r.Current_Employer__c}</p>
+                                <p class="slds-p-horizontal_small"><b>Area of Speciality:</b> {objectdata.TR1__Applicant__r.TR1__Function__c}</p>
+                                <div class="rate">
+                                    <input type="radio" id="star5" name="rate" value="5" />
+                                    <label for="star5" title="text">5 stars</label>
+                                    <input type="radio" id="star4" name="rate" value="4" />
+                                    <label for="star4" title="text">4 stars</label>
+                                    <input type="radio" id="star3" name="rate" value="3" />
+                                    <label for="star3" title="text">3 stars</label>
+                                    <input type="radio" id="star2" name="rate" value="2" />
+                                    <label for="star2" title="text">2 stars</label>
+                                    <input type="radio" id="star1" name="rate" value="1" />
+                                    <label for="star1" title="text">1 star</label>
+                                </div>
+                            </div>
+                            <div class="slds-col">
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label" for="textarea-id-01">A few words..</label>
+                                    <div class="slds-form-element__control">
+                                      <textarea id="textarea-id-01" disabled="" placeholder="Placeholder text…" class="slds-textarea">
+                                        { objectdata.TR1__Applicant__r.TR1__TextResume__c }
+                                      </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick={submitDetails} title="OK">OK</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </template>
+</template>

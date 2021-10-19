@@ -1,0 +1,92 @@
+<template>
+    <template if:true={jobs}>
+
+        <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+            <lightning-layout>
+                <lightning-layout-item padding="around-small">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning-combobox name="recordTypes"
+                                                label="Record Types"
+                                                value={selectedValue}
+                                                placeholder="-Select-"
+                                                options={options}
+                                                onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning-combobox name="functionOptions"
+                                                label="Job Specialities"
+                                                value={selectedFunction}
+                                                placeholder="-Select-"
+                                                options={functionOptions}
+                                                onchange={handleFunctionChange}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+
+        <div class="wrapper">
+
+            <section class="content">
+                <div class="columns">
+                    <main class="main" >
+                        <div class="slds-grid slds-wrap">
+                            <template for:each={jobs} for:item="job">
+                                <c-record-tile 
+                                    key={job.Id} 
+                                    job={job}
+                                    ontileclick={handleTileClick}>
+                                </c-record-tile>
+                            </template>
+                        </div>
+                    </main>
+        
+                    <aside class="sidebar-second">
+                        <template if:true={selectedItem}>
+                            <lightning-card>
+                                <h3 slot="title">
+                                    <lightning-icon icon-name="standard:avatar" size="small"></lightning-icon>
+                                    &nbsp; {selectedItem.Name}
+                                </h3>
+                                    <div class="container">
+                                        <p class="slds-p-horizontal_small">Job Title: {selectedItem.Name}</p>
+                                        <p class="slds-p-horizontal_small">No. of Openings: {selectedItem.TR1__Number_of_Openings__c}</p>
+                                        <p class="slds-p-horizontal_small">Pay Rate: {selectedItem.TR1__Minimum_Bill_Rate__c}</p>
+                                        <p class="slds-p-horizontal_small">Stage: {selectedItem.Job_Stage_Text__c}</p>
+                                    </div>
+                            </lightning-card>
+
+                            <lightning-accordion>
+                                <template for:each={applications} for:item="application">
+                                    <c-accordian-for-each 
+                                        key={application.Id} 
+                                        objectdata={application}>
+                                    </c-accordian-for-each>
+                                </template>
+                            </lightning-accordion>
+
+                        </template>
+        
+                        <template if:false={selectedItem}>
+                            <div>Select an Item to see it's details</div>
+                        </template>
+        
+                    </aside>
+                </div>
+            </section>
+            </div>
+    </template>
+
+    <template if:false={jobs}>
+        <div class="slds-text-heading_medium">You need to supply an ID</div>
+        <p>{ recordID }</p>
+    </template>
+
+</template>

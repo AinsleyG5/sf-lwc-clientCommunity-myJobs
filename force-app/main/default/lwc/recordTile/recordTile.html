@@ -1,0 +1,25 @@
+<template>
+    <template if:true={recordTypeName}>
+        <div class="slds-col">
+            <lightning-card>
+                <h3 slot="title">
+                    <lightning-icon icon-name="standard:account" size="small"></lightning-icon>
+                    &nbsp; {job.Name}
+                </h3>
+                <a onclick={tileClick}>
+                    <br>
+                    <p class="slds-p-horizontal_small">Job Title: { job.Name } </p>
+                    <p class="slds-p-horizontal_small">Status: { job.Job_Stage_Text__c } </p>
+                    <p class="slds-p-horizontal_small">No. of Openings: { job.TR1__Number_of_Openings__c } </p>
+                    <p class="slds-p-horizontal_small">Est. Start Date: { job.TR1__Estimated_Start_Date__c } </p>
+                    <p class="slds-p-horizontal_small">Job Type: { recordTypeName } </p>
+                    <br>
+                    <p class="slds-p-horizontal_small"><b>Days Open: { job.TR1__Days_Open__c } </b> </p>
+                    <p class="slds-p-horizontal_small"><b>Candidate Matches: { job.Applications__c } </b> </p>
+    
+                </a>
+                <lightning-button label="Details" slot="footer" onclick={tileClick}></lightning-button>
+            </lightning-card>
+        </div>
+    </template>
+</template>
